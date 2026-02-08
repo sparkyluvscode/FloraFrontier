@@ -1,6 +1,7 @@
 import pandas as pd
 import scipy 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 before = pd.read_csv("final_before.csv")
@@ -75,4 +76,37 @@ change = total_post-total_pre
 cohens_d = change.mean() / change.std(ddof=1)
 print("Cohen's d (paired):",cohens_d)
 
-    
+
+# Graph stuff
+
+
+# Pre Histogram
+plt.hist(total_pre,bins=np.arange(20,81,10),edgecolor='black',alpha=0.7)
+plt.xlabel("Pre STAI total score")
+plt.title("Distribution of Pre-Game STAI Scores")
+plt.savefig("pre_histogram.png",dpi=300)
+plt.show()
+
+#Post histogram
+plt.figure()
+plt.hist(total_post,bins=np.arange(20,81,10),edgecolor='black',alpha=0.7)
+plt.xlabel("Post STAI total score")
+plt.title("Distribution of Post-Game STAI Scores")
+plt.savefig("post_histogram.png",dpi=300)
+plt.show()
+
+#Change histogram
+plt.figure()
+plt.hist(change,bins=np.arange(-50,11,10),edgecolor='black',alpha=0.7)
+plt.title("Distribution of Change in STAI Scores (Before-After) ")
+plt.savefig("change_histogram.png",dpi=300)
+plt.show()
+
+
+#extra
+# Q-Q plot (normal probability plot) for change scores
+plt.figure()
+scipy.stats.probplot(change, dist="norm", plot=plt)
+plt.title("Q-Q Plot: Change in STAI (Normality Check)")
+plt.savefig("qq_plot_change.png", dpi=300)
+plt.show()
